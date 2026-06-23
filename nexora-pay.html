@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora Pay - Payment Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.png" alt="Nexora Tech Logo" class="logo-img">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="nexora-pay.html">Nexora Pay</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-secondary" style="padding-bottom: 0;">
+        <div class="hero-content">
+            <h1>Nexora Pay</h1>
+            <p>Your Trusted Payment Solution</p>
+        </div>
+    </section>
+
+    <!-- Payment Platform Section -->
+    <section class="payment-section" style="padding-top: 40px;">
+        <div class="container">
+            <div class="payment-header">
+                <img src="nexora-pay-logo.svg" alt="Nexora Pay Logo" class="nexora-pay-logo">
+                <h2>Secure Payment Platform</h2>
+                <p class="payment-intro">Fast, Secure & Reliable Money Transfers</p>
+            </div>
+            
+            <div class="payment-platform-wrapper">
+                <div class="payment-info-box">
+                    <h3>Account Information</h3>
+                    <div class="account-details">
+                        <div class="detail-item">
+                            <label>Account Number</label>
+                            <div class="account-number">8035547120</div>
+                            <button class="copy-btn" type="button" onclick="copyAccount()">Copy Account</button>
+                        </div>
+                        <div class="detail-item">
+                            <label>Account Name</label>
+                            <p>Nexora Tech Limited</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Authorized By</label>
+                            <p>Majesty Robert (Founder) & Emmanuel Alli (Vice Manager)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-methods-grid">
+                    <div class="payment-card">
+                        <div class="payment-icon">💳</div>
+                        <h3>Card Transfer</h3>
+                        <p>Send money using your debit or credit card instantly</p>
+                        <button class="payment-btn" type="button" onclick="openPaymentModal('card')">Pay Now</button>
+                    </div>
+
+                    <div class="payment-card">
+                        <div class="payment-icon">📱</div>
+                        <h3>Mobile Money</h3>
+                        <p>Quick transfers from your mobile wallet</p>
+                        <button class="payment-btn" type="button" onclick="openPaymentModal('mobile')">Send Now</button>
+                    </div>
+
+                    <div class="payment-card">
+                        <div class="payment-icon">🏦</div>
+                        <h3>Bank Transfer</h3>
+                        <p>Direct bank-to-bank transfers 24/7</p>
+                        <button class="payment-btn" type="button" onclick="openPaymentModal('bank')">Transfer Now</button>
+                    </div>
+                </div>
+
+                <div class="payment-features">
+                    <h3>Why Choose Nexora Pay?</h3>
+                    <div class="features-list">
+                        <div class="feature">
+                            <span class="feature-icon">✓</span>
+                            <p><strong>Secure:</strong> Bank-level encryption</p>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✓</span>
+                            <p><strong>Fast:</strong> Instant transactions</p>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✓</span>
+                            <p><strong>Reliable:</strong> 99.9% uptime</p>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✓</span>
+                            <p><strong>24/7:</strong> Round-the-clock support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-modal-content">
+            <span class="close" onclick="closePaymentModal()">&times;</span>
+            <div class="payment-modal-header">
+                <h2>Nexora Pay Transfer</h2>
+                <p class="payment-method-name"><span id="paymentMethod"></span></p>
+            </div>
+            
+            <div class="payment-modal-body">
+                <div class="recipient-info">
+                    <h3>Recipient Account</h3>
+                    <div class="recipient-card">
+                        <p><strong>Account Number:</strong> <span class="highlight">8035547120</span></p>
+                        <p><strong>Account Name:</strong> Nexora Tech Limited</p>
+                        <p><strong>Authorized:</strong> Majesty Robert & Emmanuel Alli</p>
+                    </div>
+                </div>
+
+                <form id="paymentForm" class="payment-form">
+                    <h3>Sender Details</h3>
+                    <div class="form-group">
+                        <input type="text" id="paymentName" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="paymentEmail" placeholder="Your Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="paymentPhone" placeholder="Your Phone Number" required>
+                    </div>
+
+                    <h3>Payment Details</h3>
+                    <div class="form-group">
+                        <input type="text" id="cardNumber" placeholder="Your Card/Account Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="amount" placeholder="Amount (₦)" min="100" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="paymentNote" placeholder="Payment Description (Optional)" rows="2"></textarea>
+                    </div>
+
+                    <div class="payment-summary">
+                        <p>Amount to Send: <span id="amountDisplay">₦0</span></p>
+                        <p>Transaction Fee: <span>Free</span></p>
+                        <p class="total"><strong>Total: <span id="totalDisplay">₦0</span></strong></p>
+                    </div>
+
+                    <button type="submit" class="submit-button payment-submit">Complete Transfer</button>
+                    <p class="secure-notice">🔒 Your transaction is 100% secure and encrypted</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Nexora Tech. All rights reserved. | Nexora Pay - Secure Payment Solutions</p>
+        </div>
+    </footer>
+
+    <script src="nexora-pay.js"></script>
+</body>
+</html>

@@ -11,19 +11,9 @@ function closeApplyForm() {
     document.getElementById('applyModal').style.display = 'none';
 }
 
-// Copy Account Number
-function copyAccount() {
-    const accountNumber = '8035547120';
-    navigator.clipboard.writeText(accountNumber).then(() => {
-        alert('Account number copied: ' + accountNumber);
-    }).catch(err => {
-        alert('Failed to copy account number');
-    });
-}
-
-// Close Payment Modal
-function closePaymentModal() {
-    document.getElementById('paymentModal').style.display = 'none';
+// Close Apply Form Modal
+function closeApplyForm() {
+    document.getElementById('applyModal').style.display = 'none';
 }
 
 // Open Status Check Modal
@@ -41,14 +31,10 @@ function closeStatusCheck() {
 // Close modal when clicking outside of it
 window.onclick = function(event) {
     const applyModal = document.getElementById('applyModal');
-    const paymentModal = document.getElementById('paymentModal');
     const statusModal = document.getElementById('statusModal');
     
     if (event.target == applyModal) {
         applyModal.style.display = 'none';
-    }
-    if (event.target == paymentModal) {
-        paymentModal.style.display = 'none';
     }
     if (event.target == statusModal) {
         statusModal.style.display = 'none';
@@ -113,48 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Close modal
             closeApplyForm();
-        });
-    }
-
-    // Handle Payment Form Submission
-    const paymentForm = document.getElementById('paymentForm');
-    if (paymentForm) {
-        // Update amount display in real-time
-        const amountInput = document.getElementById('amount');
-        if (amountInput) {
-            amountInput.addEventListener('input', function() {
-                const amount = this.value || '0';
-                document.getElementById('amountDisplay').textContent = '₦' + parseFloat(amount).toLocaleString('en-NG');
-                document.getElementById('totalDisplay').textContent = '₦' + parseFloat(amount).toLocaleString('en-NG');
-            });
-        }
-
-        paymentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('paymentName').value;
-            const email = document.getElementById('paymentEmail').value;
-            const phone = document.getElementById('paymentPhone').value;
-            const amount = document.getElementById('amount').value;
-            
-            // Validate fields
-            if (!name || !email || !phone || !amount) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            // Show success message
-            alert(`Payment of ₦${parseFloat(amount).toLocaleString('en-NG')} initiated successfully!\n\nAccount: 8035547120\n\nYour payment will be processed shortly. Thank you for your support.`);
-            
-            // Close modal
-            closePaymentModal();
         });
     }
 
@@ -232,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe job cards and other cards
-    document.querySelectorAll('.job-card, .service-detail, .payment-card').forEach(card => {
+    document.querySelectorAll('.job-card, .service-detail').forEach(card => {
         card.style.opacity = '0';
         observer.observe(card);
     });
