@@ -5,16 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexora Tech - Bringing Digital World to the Future</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // Show loader on first page visit
-        window.addEventListener('beforeunload', () => {
-            sessionStorage.setItem('nexora_visited', 'true');
-        });
-    </script>
 </head>
-<body>
+<body class="no-scroll">
     <!-- Loading Screen -->
-    <div id="loader" style="display: none;">
+    <div id="loader">
         <style>
             #loader {
                 position: fixed;
@@ -152,15 +146,14 @@
     </div>
     
     <script>
-        // Show loader if first visit
         window.addEventListener('load', () => {
-            const isFirstVisit = !sessionStorage.getItem('nexora_visited');
-            if (isFirstVisit) {
-                document.getElementById('loader').style.display = 'flex';
-                sessionStorage.setItem('nexora_visited', 'true');
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.display = 'flex';
                 setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                }, 2500);
+                    loader.style.display = 'none';
+                    document.body.classList.remove('no-scroll');
+                }, 2000);
             }
         });
     </script>
@@ -172,9 +165,9 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="nexora-pay.html">Nexora Pay</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#nexora-pay">Nexora Pay</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="hamburger">
@@ -254,7 +247,22 @@
             </div>
         </div>
     </section>
-
+ 
+    <!-- Nexora Pay Preview Section -->
+    <section id="nexora-pay" class="services payment-preview" style="padding-top: 40px;">
+        <div class="container">
+            <h2>Nexora Pay Preview</h2>
+            <div class="payment-platform-wrapper" style="margin-top: 1rem;">
+                <div class="payment-card" style="background: rgba(26,31,58,0.95);">
+                    <div class="payment-icon">🏦</div>
+                    <h3>Generate Payment Account</h3>
+                    <p>Access Nexora Pay directly from the home page and generate a payment account number for secure transfers.</p>
+                    <button class="payment-btn" type="button" onclick="window.location.href='nexora-pay.html'">Open Nexora Pay</button>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -283,21 +291,24 @@
 
     <script src="script.js"></script>
     <script>
-        // Hamburger menu for index page
+        // Ensure menu behaviors are consistent and body scroll is locked when open
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
 
             if (hamburger) {
+                // keep behavior in sync with script.js
                 hamburger.addEventListener('click', () => {
-                    navLinks.classList.toggle('active');
+                    const isActive = navLinks.classList.toggle('active');
                     hamburger.classList.toggle('active');
+                    document.body.classList.toggle('no-scroll', isActive);
                 });
 
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', () => {
                         navLinks.classList.remove('active');
                         hamburger.classList.remove('active');
+                        document.body.classList.remove('no-scroll');
                     });
                 });
             }

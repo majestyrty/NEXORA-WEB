@@ -13,26 +13,50 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('active');
-});
-
-// Close mobile menu when a link is clicked
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        hamburger.classList.remove('active');
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        const isActive = navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+        // Lock background scroll when menu is open
+        document.body.classList.toggle('no-scroll', isActive);
     });
-});
+
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        });
+    });
+
+    // Close menu with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+    });
+}
 
 // CTA Button functionality
-document.querySelector('.cta-button').addEventListener('click', () => {
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-});
+const ctaButton = document.querySelector('.cta-button');
+if (ctaButton) {
+    ctaButton.addEventListener('click', () => {
+        const target = document.getElementById('services');
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.location.href = 'services.html';
+        }
+    });
+}
 
 // Contact form submission
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
     const name = this.querySelector('input[type="text"]').value;

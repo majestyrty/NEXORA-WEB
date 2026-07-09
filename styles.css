@@ -73,6 +73,21 @@ body {
     gap: 2rem;
 }
 
+.nav-links.active {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 39, 0.96);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-top: 120px;
+    width: 100%;
+    display: flex;
+    z-index: 2000;
+    overflow-y: auto;
+}
+
 .nav-links a {
     color: var(--text-light);
     text-decoration: none;
@@ -85,10 +100,14 @@ body {
 
 /* Hamburger Menu - Sharp Design */
 .hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     cursor: pointer;
     gap: 5px;
+}
+
+body.no-scroll {
+    overflow: hidden;
 }
 
 .hamburger span {
@@ -1274,19 +1293,41 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Lock body when mobile menu open */
+    .no-scroll {
+        overflow: hidden;
+    }
+
+    /* Fullscreen overlay mobile menu */
     .nav-links {
-        position: absolute;
-        top: 60px;
+        position: fixed;
+        top: 0;
         left: 0;
         right: 0;
-        background: var(--card-bg);
+        height: 100vh;
+        background: rgba(10,14,39,0.96);
         flex-direction: column;
         width: 100%;
         text-align: center;
         display: none;
         gap: 0;
-        padding: 1rem 0;
-        border-top: 1px solid rgba(0, 102, 255, 0.2);
+        padding-top: 120px;
+        padding-bottom: 40px;
+        border-top: none;
+        align-items: center;
+        justify-content: flex-start;
+        z-index: 2000;
+        overflow-y: auto;
+    }
+
+    /* subtle backdrop blur for modern feel */
+    .nav-links::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(10,14,39,0.95), rgba(26,31,58,0.9));
+        z-index: -1;
+        backdrop-filter: blur(6px);
     }
 
     .nav-links.active {
@@ -1294,13 +1335,17 @@ body {
     }
 
     .nav-links li {
-        padding: 0.8rem 0;
-        border-bottom: 1px solid rgba(0, 102, 255, 0.1);
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        width: 100%;
+        max-width: 480px;
     }
 
     .nav-links a {
         display: block;
-        padding: 0.5rem;
+        padding: 0.75rem 1rem;
+        font-size: 1.05rem;
+        color: var(--text-light);
     }
 
     .logo-img {

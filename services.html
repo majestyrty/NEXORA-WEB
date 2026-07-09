@@ -5,16 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services & Careers - Nexora Tech</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // Show loader on first page visit
-        window.addEventListener('beforeunload', () => {
-            sessionStorage.setItem('nexora_visited', 'true');
-        });
-    </script>
 </head>
-<body>
+<body class="no-scroll">
     <!-- Loading Screen -->
-    <div id="loader" style="display: none;">
+    <div id="loader">
         <style>
             #loader {
                 position: fixed;
@@ -152,15 +146,14 @@
     </div>
     
     <script>
-        // Show loader if first visit
         window.addEventListener('load', () => {
-            const isFirstVisit = !sessionStorage.getItem('nexora_visited');
-            if (isFirstVisit) {
-                document.getElementById('loader').style.display = 'flex';
-                sessionStorage.setItem('nexora_visited', 'true');
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.display = 'flex';
                 setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                }, 2500);
+                    loader.style.display = 'none';
+                    document.body.classList.remove('no-scroll');
+                }, 2000);
             }
         });
     </script>

@@ -1,11 +1,30 @@
-// Copy Account Number
+// Account number handling (dynamic)
+let currentAccountNumber = '8035547120';
+
+function updateAccountDisplays() {
+    const mainDisplay = document.getElementById('accountNumberDisplay');
+    if (mainDisplay) mainDisplay.textContent = currentAccountNumber;
+    const recipient = document.getElementById('recipientAccount');
+    if (recipient) recipient.textContent = currentAccountNumber;
+    // Also update any other .account-number instances
+    document.querySelectorAll('.account-number').forEach(el => {
+        if (el && el.id !== 'accountNumberDisplay') el.textContent = currentAccountNumber;
+    });
+}
+
 function copyAccount() {
-    const accountNumber = '8035547120';
-    navigator.clipboard.writeText(accountNumber).then(() => {
-        alert('✅ Account number copied: ' + accountNumber);
+    navigator.clipboard.writeText(currentAccountNumber).then(() => {
+        alert('✅ Account number copied: ' + currentAccountNumber);
     }).catch(err => {
         alert('Failed to copy account number');
     });
+}
+
+function generateAccount() {
+    // Simple 10-digit pseudo-random account generator (starts with non-zero)
+    currentAccountNumber = String(Math.floor(1000000000 + Math.random() * 9000000000));
+    updateAccountDisplays();
+    alert('🔢 New account number generated: ' + currentAccountNumber);
 }
 
 // Open Payment Modal
@@ -91,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const method = document.getElementById('paymentMethod').textContent;
             const formattedAmount = numAmount.toLocaleString('en-NG');
             
-            alert(`✅ Payment Initiated Successfully!\n\n📱 Method: ${method}\n💰 Amount: ₦${formattedAmount}\n🏦 Account: 8035547120\n👤 Name: ${name}\n📧 Email: ${email}\n\nYour payment will be processed shortly.\nThank you for your support!`);
+            alert(`✅ Payment Initiated Successfully!\n\n📱 Method: ${method}\n💰 Amount: ₦${formattedAmount}\n🏦 Account: ${currentAccountNumber}\n👤 Name: ${name}\n📧 Email: ${email}\n\nYour payment will be processed shortly.\nThank you for your support!`);
             
             // Close modal
             closePaymentModal();
@@ -148,4 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
         card.style.opacity = '0';
         observer.observe(card);
     });
+
+    // Ensure dynamic account number is shown on load
+    updateAccountDisplays();
 });
