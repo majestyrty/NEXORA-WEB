@@ -95,7 +95,23 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show success message
             const jobTitle = document.getElementById('jobTitle').textContent;
-            alert(`Thank you for your application for ${jobTitle}! We will review your application and get back to you soon.`);
+            
+            // Send email notification (if notification system is loaded)
+            if (window.notificationSystem) {
+                window.notificationSystem.sendEmailNotification(
+                    email,
+                    `Application for ${jobTitle}`,
+                    `Thank you for your application for ${jobTitle}. We will review it and get back to you soon.`
+                );
+                
+                window.notificationSystem.showNotification(
+                    `Application submitted for ${jobTitle}! Check your email for confirmation.`,
+                    'success',
+                    5000
+                );
+            } else {
+                alert(`Thank you for your application for ${jobTitle}! We will review your application and get back to you soon.`);
+            }
             
             // Close modal
             closeApplyForm();

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="no-scroll">
-    <!-- Loading Screen -->
+    <!-- Professional Loading Screen -->
     <div id="loader">
         <style>
             #loader {
@@ -16,45 +16,58 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+                background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f0f1e 100%);
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 z-index: 9999;
+                overflow: hidden;
+            }
+
+            #loader::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 80%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
+                pointer-events: none;
             }
 
             .loader-container {
                 position: relative;
-                width: 300px;
-                height: 300px;
+                width: 100%;
+                height: 100%;
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                z-index: 1;
             }
 
             .logo-wrapper {
                 position: relative;
-                width: 200px;
-                height: 200px;
+                width: 180px;
+                height: 180px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                margin-bottom: 2rem;
             }
 
             .logo-wrapper img {
                 max-width: 100%;
                 max-height: 100%;
                 animation: pulse 2s ease-in-out infinite;
-                filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.6));
+                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.5));
             }
 
             .spinner {
                 position: absolute;
-                width: 220px;
-                height: 220px;
-                border: 3px solid transparent;
-                border-top: 3px solid #0066ff;
-                border-right: 3px solid #00d4ff;
+                width: 200px;
+                height: 200px;
+                border: 2px solid transparent;
+                border-top: 2px solid #0066ff;
+                border-right: 2px solid #00d4ff;
                 border-radius: 50%;
                 animation: rotate 3s linear infinite;
             }
@@ -62,40 +75,46 @@
             .spinner::after {
                 content: '';
                 position: absolute;
-                width: 220px;
-                height: 220px;
-                border: 3px solid transparent;
-                border-bottom: 3px solid #ff6600;
-                border-left: 3px solid #ffaa00;
+                width: 200px;
+                height: 200px;
+                border: 2px solid transparent;
+                border-bottom: 2px solid #ff6600;
+                border-left: 2px solid #ffaa00;
                 border-radius: 50%;
                 animation: rotate-reverse 2s linear infinite;
+                top: 0;
+                left: 0;
             }
 
             .loading-text {
-                position: absolute;
-                bottom: -60px;
-                left: 50%;
-                transform: translateX(-50%);
                 text-align: center;
-                width: 100%;
+                margin-top: 3rem;
+            }
+
+            .loading-text h1 {
+                color: #00d4ff;
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+                letter-spacing: 3px;
+                font-weight: 700;
             }
 
             .loading-text h2 {
-                color: #00d4ff;
-                font-size: 18px;
-                margin-bottom: 10px;
-                letter-spacing: 2px;
+                font-size: 1rem;
+                margin: 0;
             }
 
             .dot-animation {
                 display: inline-block;
                 color: #0066ff;
-                font-size: 20px;
-                margin-left: 5px;
+                font-size: 1.5rem;
+                margin-left: 8px;
             }
 
             .dot-animation span {
                 animation: dot 1.4s infinite;
+                display: inline-block;
+                width: 8px;
             }
 
             .dot-animation span:nth-child(2) {
@@ -107,10 +126,10 @@
             }
 
             .status-text {
-                color: #888;
-                font-size: 12px;
-                margin-top: 5px;
-                letter-spacing: 1px;
+                color: #a0a0a0;
+                font-size: 0.9rem;
+                margin-top: 1rem;
+                letter-spacing: 1.5px;
             }
 
             @keyframes rotate {
@@ -125,22 +144,23 @@
 
             @keyframes pulse {
                 0%, 100% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.05); opacity: 0.9; }
+                50% { transform: scale(1.08); opacity: 0.85; }
             }
 
             @keyframes dot {
                 0%, 60%, 100% { transform: translateY(0); }
-                30% { transform: translateY(-10px); }
+                30% { transform: translateY(-12px); }
             }
         </style>
         <div class="loader-container">
-            <div class="spinner"></div>
             <div class="logo-wrapper">
+                <div class="spinner"></div>
                 <img src="logo.png" alt="Nexora Tech Logo">
             </div>
             <div class="loading-text">
-                <h2>NEXORA TECH<span class="dot-animation"><span>.</span><span>.</span><span>.</span></span></h2>
-                <p class="status-text">Loading Experience</p>
+                <h1>NEXORA TECH</h1>
+                <h2>Bringing Digital World to the Future<span class="dot-animation"><span>.</span><span>.</span><span>.</span></span></h2>
+                <p class="status-text">Initializing Platform</p>
             </div>
         </div>
     </div>
@@ -151,9 +171,13 @@
             if (loader) {
                 loader.style.display = 'flex';
                 setTimeout(() => {
-                    loader.style.display = 'none';
-                    document.body.classList.remove('no-scroll');
-                }, 2000);
+                    loader.style.opacity = '0';
+                    loader.style.transition = 'opacity 0.6s ease';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        document.body.classList.remove('no-scroll');
+                    }, 600);
+                }, 2500);
             }
         });
     </script>
@@ -290,6 +314,7 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="notifications.js"></script>
     <script>
         // Ensure menu behaviors are consistent and body scroll is locked when open
         document.addEventListener('DOMContentLoaded', function() {
@@ -310,6 +335,35 @@
                         hamburger.classList.remove('active');
                         document.body.classList.remove('no-scroll');
                     });
+                });
+            }
+
+            // Handle contact form email notification
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = this.querySelector('input[type="text"]').value;
+                    const email = this.querySelector('input[type="email"]').value;
+                    const message = this.querySelector('textarea').value;
+
+                    // Send email notification (simulated)
+                    window.notificationSystem.sendEmailNotification(
+                        email,
+                        'Contact Form Submission',
+                        `Thank you for contacting us, ${name}. We will get back to you soon!`
+                    );
+
+                    // Show success message
+                    window.notificationSystem.showNotification(
+                        'Message sent successfully! Check your email for confirmation.',
+                        'success',
+                        5000
+                    );
+
+                    // Reset form
+                    this.reset();
                 });
             }
         });
