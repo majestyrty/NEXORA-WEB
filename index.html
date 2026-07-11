@@ -16,21 +16,36 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f0f1e 100%);
+                background: linear-gradient(45deg, #0a0e27 0%, #1a1f3a 25%, #0f1428 50%, #1a1f3a 75%, #0a0e27 100%);
+                background-size: 400% 400%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 z-index: 9999;
                 overflow: hidden;
+                animation: gradientShift 8s ease infinite;
+            }
+
+            @keyframes gradientShift {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
             }
 
             #loader::before {
                 content: '';
                 position: absolute;
                 inset: 0;
-                background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                            radial-gradient(circle at 80% 80%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
+                background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 80%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+                            radial-gradient(circle at 50% 0%, rgba(255, 102, 0, 0.1) 0%, transparent 50%);
                 pointer-events: none;
+                animation: floatGradient 20s ease-in-out infinite;
+            }
+
+            @keyframes floatGradient {
+                0%, 100% { transform: translate(0, 0); }
+                50% { transform: translate(10px, -10px); }
             }
 
             .loader-container {
@@ -46,57 +61,61 @@
 
             .logo-wrapper {
                 position: relative;
-                width: 180px;
-                height: 180px;
+                width: 220px;
+                height: 220px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-bottom: 2rem;
+                margin-bottom: 3rem;
             }
 
             .logo-wrapper img {
                 max-width: 100%;
                 max-height: 100%;
-                animation: pulse 2s ease-in-out infinite;
-                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.5));
+                animation: pulse 2.5s ease-in-out infinite;
+                filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 20px rgba(0, 102, 255, 0.4));
+                z-index: 2;
             }
 
             .spinner {
                 position: absolute;
-                width: 200px;
-                height: 200px;
-                border: 2px solid transparent;
-                border-top: 2px solid #0066ff;
-                border-right: 2px solid #00d4ff;
+                width: 240px;
+                height: 240px;
+                border: 3px solid transparent;
+                border-top: 3px solid #0066ff;
+                border-right: 3px solid #00d4ff;
                 border-radius: 50%;
                 animation: rotate 3s linear infinite;
+                box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
             }
 
             .spinner::after {
                 content: '';
                 position: absolute;
-                width: 200px;
-                height: 200px;
-                border: 2px solid transparent;
-                border-bottom: 2px solid #ff6600;
-                border-left: 2px solid #ffaa00;
+                width: 240px;
+                height: 240px;
+                border: 3px solid transparent;
+                border-bottom: 3px solid #ff6600;
+                border-left: 3px solid #ffaa00;
                 border-radius: 50%;
                 animation: rotate-reverse 2s linear infinite;
                 top: 0;
                 left: 0;
+                box-shadow: 0 0 30px rgba(255, 102, 0, 0.2);
             }
 
             .loading-text {
                 text-align: center;
-                margin-top: 3rem;
+                margin-top: 3.5rem;
             }
 
             .loading-text h1 {
                 color: #00d4ff;
-                font-size: 2rem;
-                margin-bottom: 0.5rem;
-                letter-spacing: 3px;
-                font-weight: 700;
+                font-size: 2.2rem;
+                margin-bottom: 0.75rem;
+                letter-spacing: 4px;
+                font-weight: 800;
+                text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
             }
 
             .loading-text h2 {
@@ -165,7 +184,112 @@
         </div>
     </div>
     
+    <!-- Login/Signup Modal -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <h2>Welcome to Nexora Tech</h2>
+                <p>Join us and transform your digital future</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" data-tab="login" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab-btn" data-tab="signup" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+            
+            <!-- Login Tab -->
+            <form id="loginForm" class="auth-form active-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+                <button type="submit" class="auth-submit-btn">Login</button>
+                <p class="auth-link"><a href="#" onclick="switchAuthTab('signup'); return false;">Don't have an account? Sign up</a></p>
+            </form>
+            
+            <!-- Signup Tab -->
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Confirm Password" required>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox"> I agree to Terms & Conditions</label>
+                </div>
+                <button type="submit" class="auth-submit-btn">Create Account</button>
+                <p class="auth-link"><a href="#" onclick="switchAuthTab('login'); return false;">Already have an account? Login</a></p>
+            </form>
+        </div>
+    </div>
+    
     <script>
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const loginTab = document.querySelector('.auth-tab-btn[data-tab="login"]');
+            const signupTab = document.querySelector('.auth-tab-btn[data-tab="signup"]');
+
+            loginTab.classList.toggle('active', tab === 'login');
+            signupTab.classList.toggle('active', tab === 'signup');
+            loginForm.classList.toggle('active-form', tab === 'login');
+            signupForm.classList.toggle('active-form', tab === 'signup');
+        }
+
+        function showAuthModal() {
+            const authModal = document.getElementById('authModal');
+            if (!authModal) return;
+
+            authModal.style.display = 'flex';
+            setTimeout(() => {
+                authModal.style.opacity = '1';
+            }, 10);
+            document.body.classList.add('no-scroll');
+        }
+
+        function enterSite() {
+            const authModal = document.getElementById('authModal');
+            authModal.style.opacity = '0';
+            setTimeout(() => {
+                authModal.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+                if (window.notificationSystem) {
+                    window.notificationSystem.showNotification('Welcome to Nexora Tech!', 'success', 4000);
+                }
+            }, 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    enterSite();
+                });
+            }
+
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    enterSite();
+                });
+            }
+        });
+
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
             if (loader) {
@@ -175,9 +299,11 @@
                     loader.style.transition = 'opacity 0.6s ease';
                     setTimeout(() => {
                         loader.style.display = 'none';
-                        document.body.classList.remove('no-scroll');
+                        showAuthModal();
                     }, 600);
                 }, 2500);
+            } else {
+                showAuthModal();
             }
         });
     </script>
