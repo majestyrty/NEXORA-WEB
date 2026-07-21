@@ -7,7 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+    <div id="nexoraPayLoader" class="page-loader" role="status" aria-live="polite">
+        <div class="page-loader-content">
+            <div class="page-loader-logo">
+                <div class="page-loader-ring"></div>
+                <img src="logo.png" alt="Nexora Tech Logo">
+            </div>
+            <h2>NEXORA PAY</h2>
+            <p>Preparing your secure payment experience</p>
+            <div class="page-loader-bar"><span></span></div>
+        </div>
+    </div>
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="container">
@@ -184,8 +195,16 @@
     <script src="nexora-pay.js"></script>
     <script src="notifications.js"></script>
     <script>
-        // Add email notification to payment form
         document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('nexoraPayLoader');
+            if (loader) {
+                document.body.classList.add('page-loading');
+                setTimeout(() => {
+                    loader.classList.add('is-hidden');
+                    document.body.classList.remove('page-loading');
+                }, 2200);
+            }
+
             const paymentForm = document.getElementById('paymentForm');
             if (paymentForm) {
                 paymentForm.addEventListener('submit', function(e) {
@@ -194,21 +213,20 @@
                     const email = document.getElementById('paymentEmail').value;
                     const amount = document.getElementById('amount').value;
                     
-                    // Send email notification
-                    window.notificationSystem.sendEmailNotification(
-                        email,
-                        'Payment Confirmation - Nexora Pay',
-                        `Your payment of ₦${amount} has been processed. Check your email for receipt.`
-                    );
+                    if (window.notificationSystem) {
+                        window.notificationSystem.sendEmailNotification(
+                            email,
+                            'Payment Confirmation - Nexora Pay',
+                            `Your payment of ₦${amount} has been processed. Check your email for receipt.`
+                        );
+                        
+                        window.notificationSystem.showNotification(
+                            `Transfer of ₦${amount} completed! Confirmation email sent.`,
+                            'success',
+                            5000
+                        );
+                    }
                     
-                    // Show success notification
-                    window.notificationSystem.showNotification(
-                        `Transfer of ₦${amount} completed! Confirmation email sent.`,
-                        'success',
-                        5000
-                    );
-                    
-                    // Reset form
                     setTimeout(() => {
                         paymentForm.reset();
                         closePaymentModal();
