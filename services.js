@@ -123,26 +123,48 @@ document.addEventListener('DOMContentLoaded', function() {
     if (statusForm) {
         statusForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+                    
             const email = document.getElementById('statusEmail').value;
-            
+                    
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address');
+                if (window.notificationSystem) {
+                    window.notificationSystem.showNotification('Please enter a valid email address', 'error', 4000);
+                }
                 return;
             }
-            
+                    
             // Show status
             const statusResult = document.getElementById('statusResult');
+            const applicationStatuses = [
+                { status: 'UNDER REVIEW', date: 'July 15, 2026', message: 'Your application is being reviewed by our team.' },
+                { status: 'SHORTLISTED', date: 'July 18, 2026', message: 'Congratulations! You have been shortlisted. Expect a call soon.' },
+                { status: 'INTERVIEW SCHEDULED', date: 'July 20, 2026', message: 'Your interview is scheduled for July 25, 2026 at 2:00 PM.' },
+                { status: 'REJECTED', date: 'July 16, 2026', message: 'Thank you for your interest. We encourage you to apply again in the future.' }
+            ];
+                    
+            const randomStatus = applicationStatuses[Math.floor(Math.random() * applicationStatuses.length)];
+                    
             statusResult.innerHTML = `
-                <strong>Application Status for: ${email}</strong><br><br>
-                <p>Your application is currently <strong style="color: #00d4ff;">UNDER REVIEW</strong></p>
-                <p>We received your application on <strong>June 23, 2026</strong></p>
-                <p>You will be notified via email when there are updates on your application.</p>
-                <p><em>Thank you for your interest in Nexora Tech!</em></p>
+                <div class="status-card">
+                    <div class="status-header">
+                        <h3>Application Status</h3>
+                        <span class="status-badge ${randomStatus.status.toLowerCase().replace(/\s+/g, '-')}">${randomStatus.status}</span>
+                    </div>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Last Updated:</strong> ${randomStatus.date}</p>
+                    <p class="status-message">${randomStatus.message}</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+                        For more details, check your email. We'll keep you updated!
+                    </p>
+                </div>
             `;
             statusResult.classList.add('active');
+                    
+            if (window.notificationSystem) {
+                window.notificationSystem.showNotification(`Status retrieved for ${email}`, 'success', 4000);
+            }
         });
     }
 

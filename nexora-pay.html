@@ -65,19 +65,19 @@
                     <div class="account-details">
                         <div class="detail-item">
                             <label>Account Number</label>
-                            <div id="accountNumberDisplay" class="account-number">8035547120</div>
+                            <div id="accountNumberDisplay" class="account-number" style="color: var(--text-muted);">Generate an account to get started</div>
                             <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:8px;">
-                                <button class="copy-btn" type="button" onclick="copyAccount()">Copy</button>
-                                <button class="copy-btn" type="button" onclick="generateAccount()">Generate</button>
+                                <button class="copy-btn" type="button" onclick="copyAccount()" style="opacity: 0.5; cursor: not-allowed;">Copy</button>
+                                <button class="copy-btn" type="button" onclick="generateAccount()">Generate Account</button>
                             </div>
                         </div>
                         <div class="detail-item">
                             <label>Account Name</label>
-                            <p>Nexora Tech Limited</p>
+                            <p id="accountName" style="color: var(--text-muted);">Pending generation</p>
                         </div>
                         <div class="detail-item">
                             <label>Authorized By</label>
-                            <p>Majesty Robert (Founder) & Emmanuel Alli (Vice Manager)</p>
+                            <p id="authorizedBy" style="color: var(--text-muted);">Pending generation</p>
                         </div>
                     </div>
                 </div>

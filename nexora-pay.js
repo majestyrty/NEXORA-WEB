@@ -1,30 +1,57 @@
 // Account number handling (dynamic)
-let currentAccountNumber = '8035547120';
+let currentAccountNumber = null;
 
 function updateAccountDisplays() {
     const mainDisplay = document.getElementById('accountNumberDisplay');
-    if (mainDisplay) mainDisplay.textContent = currentAccountNumber;
-    const recipient = document.getElementById('recipientAccount');
-    if (recipient) recipient.textContent = currentAccountNumber;
-    // Also update any other .account-number instances
-    document.querySelectorAll('.account-number').forEach(el => {
-        if (el && el.id !== 'accountNumberDisplay') el.textContent = currentAccountNumber;
-    });
+    const accountName = document.getElementById('accountName');
+    const authorizedBy = document.getElementById('authorizedBy');
+    const copyBtn = document.querySelector('button[onclick="copyAccount()"]');
+    
+    if (currentAccountNumber) {
+        if (mainDisplay) mainDisplay.textContent = currentAccountNumber;
+        if (mainDisplay) mainDisplay.style.color = '#f2f8ff';
+        if (accountName) accountName.textContent = 'Nexora Tech Limited';
+        if (accountName) accountName.style.color = '#e0e0e0';
+        if (authorizedBy) authorizedBy.textContent = 'Majesty Robert (Founder) & Emmanuel Alli (Vice Manager)';
+        if (authorizedBy) authorizedBy.style.color = '#e0e0e0';
+        if (copyBtn) copyBtn.style.opacity = '1';
+        if (copyBtn) copyBtn.style.cursor = 'pointer';
+        
+        const recipient = document.getElementById('recipientAccount');
+        if (recipient) recipient.textContent = currentAccountNumber;
+        
+        document.querySelectorAll('.account-number').forEach(el => {
+            if (el && el.id !== 'accountNumberDisplay') el.textContent = currentAccountNumber;
+        });
+    }
 }
 
 function copyAccount() {
+    if (!currentAccountNumber) {
+        if (window.notificationSystem) {
+            window.notificationSystem.showNotification('Please generate an account first', 'error', 4000);
+        }
+        return;
+    }
+    
     navigator.clipboard.writeText(currentAccountNumber).then(() => {
-        alert('✅ Account number copied: ' + currentAccountNumber);
+        if (window.notificationSystem) {
+            window.notificationSystem.showNotification(`✓ Account copied: ${currentAccountNumber}`, 'success', 4000);
+        }
     }).catch(err => {
-        alert('Failed to copy account number');
+        if (window.notificationSystem) {
+            window.notificationSystem.showNotification('Failed to copy account number', 'error', 4000);
+        }
     });
 }
 
 function generateAccount() {
-    // Simple 10-digit pseudo-random account generator (starts with non-zero)
     currentAccountNumber = String(Math.floor(1000000000 + Math.random() * 9000000000));
     updateAccountDisplays();
-    alert('🔢 New account number generated: ' + currentAccountNumber);
+    
+    if (window.notificationSystem) {
+        window.notificationSystem.showNotification(`✓ Account generated: ${currentAccountNumber}`, 'success', 5000);
+    }
 }
 
 // Open Payment Modal

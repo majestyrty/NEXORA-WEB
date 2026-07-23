@@ -303,11 +303,12 @@
         <div class="modal-content">
             <span class="close" onclick="closeStatusCheck()">&times;</span>
             <h2>Check Application Status</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Enter the email address you used to apply</p>
             <form id="statusForm" class="status-form">
                 <div class="form-group">
-                    <input type="email" id="statusEmail" placeholder="Enter your Email Address" required>
+                    <input type="email" id="statusEmail" placeholder="your.email@example.com" required>
                 </div>
-                <button type="submit" class="submit-button">Check Status</button>
+                <button type="submit" class="submit-button">Retrieve Status</button>
             </form>
             <div id="statusResult" class="status-result"></div>
         </div>
